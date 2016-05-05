@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FLUSH</title>
+    <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1 id="title">FLUSHED 0</h1>
+    <div>
+      <label>Input the url to flush, and click "Start"</label>
+      <div style="margin-top: 4px;">
+        <input id="UrlInput" type="text" style="width: 480px;">
+        <input id="DoButton" type="button" value="Start">
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+    </div>
+  </body>
+  <script>
+    
+    var flush = 0;
+    var interval = 10000;
+    var jobs = [];
+    
+    window.onbeforeunload = function() {
+        return false;
+    };
+    
+    function doFlush(frame, url) {
+      frame.src = url;
+      flush++;
+      $('title').text('FLUSH ' + flush);
+      $('#title').text('FLUSHED ' + flush);
+    }
+    
+    $(document).ready(function() {
+      
+      var btn = $('#DoButton');
+      
+      btn.click(function() {
+        
+        jobs.forEach(function(s) {
+          clearInterval(s);
+        });
+        
+        if ('Start' !== btn.val()) {
+          btn.val('Start');
+          return;
+        }
+        
+        var url = $('#UrlInput').val();
+        btn.val('Stop');
+        jobs = [];
+        
+        $('iframe').each(function(index, frame) {
+          
+          doFlush(frame, url);
+          
+          var job = setInterval(function() {
+            doFlush(frame, url);
+          }, interval + index * 200);
+          
+          jobs.push(job);
+          
+        });
+      
+      });
+      
+    });
+  </script>
+</html>
