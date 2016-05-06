@@ -26,12 +26,16 @@
       <iframe frameborder="0"></iframe>
       <iframe frameborder="0"></iframe>
       <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
+      <iframe frameborder="0"></iframe>
     </div>
   </body>
   <script>
     
     var flush = 0;
-    var interval = 10000;
+    var interval = 30000;
     var jobs = [];
     
     window.onbeforeunload = function() {
@@ -70,7 +74,7 @@
           
           var job = setInterval(function() {
             doFlush(frame, url);
-          }, interval + index * 200);
+          }, interval + index * 2000);
           
           jobs.push(job);
           
